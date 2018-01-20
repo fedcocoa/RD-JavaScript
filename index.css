@@ -1,3 +1,7 @@
-canvas {
+body {
+  margin: 0px;
+}
 
+canvas {
+  background-color: grey;
 }
