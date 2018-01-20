@@ -6,7 +6,7 @@
 
 //Rohan Dewan
 
-console.log("RD.js Library");
+console.log("RD.js Library made by Rohan Dewan");
 
 objects = [];
 
@@ -20,8 +20,8 @@ class Point {
 }
 
 class Circle {
-  constructor(x,y,r,c) {
-    this.center = new Point(x,y);
+  constructor(Center,r,c) {
+    this.center = new Point(Center.x,Center.y);
     this.radius = r || 10;
     this.colour = c || "white";
     objects.push(this);
@@ -32,15 +32,28 @@ class Circle {
 }
 
 class Line {
-  constructor(x1,y1,x2,y2,w,c) {
-    this.start = new Point(x1 || 0,y1 || 0);
-    this.end = new Point(x2 || 0, y2 || 0);
+  constructor(Start,End,w,c) {
+    this.start = new Point(Start.x || 0, Start.y || 0);
+    this.end = new Point(End.y || 0, End.y || 0);
     this.width = w || 1;
     this.colour = c || "white";
     objects.push(this);
   }
   draw() {
     drawLine(this);
+  }
+}
+
+class Rect {
+  constructor(Start,Width,Height,Colour) {
+    this.start = new Point(Start.x || 0, Start.y || 0);
+    this.width = Width || 0;
+    this.height = Height || 0;
+    this.colour = Colour || "white";
+    objects.push(this);
+  }
+  draw() {
+    drawRect(this);
   }
 }
 
@@ -63,6 +76,11 @@ function drawLine(line) {
   ctx.moveTo(line.start.x,line.start.y);
   ctx.lineTo(line.end.x,line.end.y);
   ctx.stroke();
+}
+
+function drawRect(rect) {
+  ctx.fillStyle = rect.colour;
+  ctx.fillRect(rect.start.x,rect.start.y,rect.width,rect.height);
 }
 
 function clearCanvas() {
