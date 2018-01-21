@@ -5,28 +5,24 @@
 //functionality.
 
 //Rohan Dewan
-var canvas;
-var ctx;
-
-function canvasCheck() {
-  if(document.getElementById("canvas") == null) {
-    canvas = document.createElement("canvas");
-    canvas.id = "canvas";
-    document.body.appendChild(canvas);
-    ctx = canvas.getContext("2d");
-  } else {
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
-  }
-}
 
 console.log("RD.js Library made by Rohan Dewan");
 
-objects = [];
+var canvas;
+var ctx;
+
+var objects = [];
 
 setInterval(draw,60);
 
 class Point {
+  constructor(x,y) {
+    this.x = x || 0;
+    this.y = y || 0;
+  }
+}
+
+class Vector {
   constructor(x,y) {
     this.x = x || 0;
     this.y = y || 0;
@@ -43,6 +39,10 @@ class Circle {
   draw(){
     drawCircle(this);
   }
+  addVector(vector) {
+    this.center.x += vector.x;
+    this.center.y += vector.y;
+  }
 }
 
 class Line {
@@ -56,6 +56,12 @@ class Line {
   draw() {
     drawLine(this);
   }
+  addVector(vector) {
+    this.start.x += vector.x;
+    this.start.y += vector.y;
+    this.end.x += vector.x;
+    this.end.y += vector.y;
+  }
 }
 
 class Rect {
@@ -68,6 +74,23 @@ class Rect {
   }
   draw() {
     drawRect(this);
+  }
+  addVector(vector) {
+    this.start.x += vector.x;
+    this.start.y += vector.y;
+  }
+}
+
+function canvasCheck() {
+  if(document.getElementById("canvas") == null) {
+    console.log("No canvas with 'canvas' id. Creating one.")
+    canvas = document.createElement("canvas");
+    canvas.id = "canvas";
+    document.body.appendChild(canvas);
+    ctx = canvas.getContext("2d");
+  } else {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
   }
 }
 
