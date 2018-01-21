@@ -5,6 +5,20 @@
 //functionality.
 
 //Rohan Dewan
+var canvas;
+var ctx;
+
+function canvasCheck() {
+  if(document.getElementById("canvas") == null) {
+    canvas = document.createElement("canvas");
+    canvas.id = "canvas";
+    document.body.appendChild(canvas);
+    ctx = canvas.getContext("2d");
+  } else {
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
+  }
+}
 
 console.log("RD.js Library made by Rohan Dewan");
 
@@ -21,7 +35,7 @@ class Point {
 
 class Circle {
   constructor(Center,r,c) {
-    this.center = new Point(Center.x,Center.y);
+    this.center = Center || new Point(0,0);
     this.radius = r || 10;
     this.colour = c || "white";
     objects.push(this);
@@ -33,8 +47,8 @@ class Circle {
 
 class Line {
   constructor(Start,End,w,c) {
-    this.start = new Point(Start.x || 0, Start.y || 0);
-    this.end = new Point(End.y || 0, End.y || 0);
+    this.start = Start || new Point(0,0);
+    this.end = End || new Point(0,0);
     this.width = w || 1;
     this.colour = c || "white";
     objects.push(this);
@@ -46,7 +60,7 @@ class Line {
 
 class Rect {
   constructor(Start,Width,Height,Colour) {
-    this.start = new Point(Start.x || 0, Start.y || 0);
+    this.start = Start || new Point(0,0);
     this.width = Width || 0;
     this.height = Height || 0;
     this.colour = Colour || "white";
@@ -57,7 +71,7 @@ class Rect {
   }
 }
 
-function setSize(width,height) {
+function canvasSize(width,height) {
   canvas.width = width;
   canvas.height = height;
 }
