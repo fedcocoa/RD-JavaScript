@@ -30,10 +30,11 @@ class Vector {
 }
 
 class Circle {
-  constructor(Center,r,c) {
+  constructor(Center,r,c,sf) {
     this.center = Center || new Point(0,0);
     this.radius = r || 10;
     this.colour = c || "white";
+    this.sf = sf || "fill";
     objects.push(this);
   }
   draw(){
@@ -65,11 +66,12 @@ class Line {
 }
 
 class Rect {
-  constructor(Start,Width,Height,Colour) {
+  constructor(Start,Width,Height,Colour,sf) {
     this.start = Start || new Point(0,0);
     this.width = Width || 0;
     this.height = Height || 0;
     this.colour = Colour || "white";
+    this.sf = sf || "fill";
     objects.push(this);
   }
   draw() {
@@ -101,9 +103,14 @@ function canvasSize(width,height) {
 
 function drawCircle(circle) {
   ctx.fillStyle = circle.colour;
+  ctx.strokeStyle = circle.colour;
   ctx.beginPath();
   ctx.arc(circle.center.x,circle.center.y,circle.radius,0,Math.PI*2);
-  ctx.fill();
+  if(circle.sf == "fill") {
+    ctx.fill();
+  }else if (circle.sf == "stroke") {
+    ctx.stroke();
+  }
 }
 
 function drawLine(line) {
@@ -117,7 +124,12 @@ function drawLine(line) {
 
 function drawRect(rect) {
   ctx.fillStyle = rect.colour;
-  ctx.fillRect(rect.start.x,rect.start.y,rect.width,rect.height);
+  ctx.strokeStyle = rect.colour;
+  if(rect.sf == "fill") {
+    ctx.fillRect(rect.start.x,rect.start.y,rect.width,rect.height);
+  }else if (rect.sf == "stroke") {
+    ctx.strokeRect(rect.start.x,rect.start.y,rect.width,rect.height);
+  }
 }
 
 function clearCanvas() {
