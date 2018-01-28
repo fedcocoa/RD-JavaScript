@@ -17,7 +17,6 @@ setInterval(draw,60);
 
 addEventListener("mousemove",function(event){
   mousePoint = new Point(event.clientX,event.clientY);
-  console.log(mousePoint);
 });
 
 class Point {
