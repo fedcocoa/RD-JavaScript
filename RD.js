@@ -10,10 +10,15 @@ console.log("RD.js Library made by Rohan Dewan");
 
 var canvas;
 var ctx;
-
 var objects = [];
+var mousePoint;
 
 setInterval(draw,60);
+
+addEventListener("mousemove",function(event){
+  mousePoint = new Point(event.clientX,event.clientY);
+  console.log(mousePoint);
+});
 
 class Point {
   constructor(x,y) {
