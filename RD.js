@@ -150,3 +150,11 @@ function drawObjects() {
     objects[i].draw();
   }
 }
+
+function RGBStr(r,g,b) {
+  return "rgb(" + r.toString() + "," + g.toString() + "," + b.toString() + ")";
+}
+
+function RGBAStr(r,g,b,a) {
+  return "rgba(" + r.toString() + "," + g.toString() + "," + b.toString() + "," + a.toString() + ")";
+}
