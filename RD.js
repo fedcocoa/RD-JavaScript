@@ -11,12 +11,13 @@ console.log("RD.js Library made by Rohan Dewan");
 var canvas;
 var ctx;
 var objects = [];
-var mousePoint;
+var drawRate = 1;
 
-setInterval(draw,60);
+setInterval(draw,drawRate);
 
 addEventListener("mousemove",function(event){
-  mousePoint = new Point(event.clientX,event.clientY);
+  mousePoint.x = event.clientX
+  mousePoint.y = event.clientY;
 });
 
 class Point {
@@ -24,12 +25,19 @@ class Point {
     this.x = x || 0;
     this.y = y || 0;
   }
-}
-
-class Vector {
-  constructor(x,y) {
-    this.x = x || 0;
-    this.y = y || 0;
+  static updateXY(x,y) {
+    this.x = x;
+    this.y = y;
+  }
+  static updatePoint(a) {
+    this.x = a.x;
+    this.y = a.y;
+  }
+  static distance(a,b) {
+    return Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2);
+  }
+  static midPoint(a,b) {
+    return new Point((a.x+b.x)/2,(a.y+b.y)/2);
   }
 }
 
@@ -44,10 +52,6 @@ class Circle {
   draw(){
     drawCircle(this);
   }
-  addVector(vector) {
-    this.center.x += vector.x;
-    this.center.y += vector.y;
-  }
 }
 
 class Line {
@@ -61,11 +65,9 @@ class Line {
   draw() {
     drawLine(this);
   }
-  addVector(vector) {
-    this.start.x += vector.x;
-    this.start.y += vector.y;
-    this.end.x += vector.x;
-    this.end.y += vector.y;
+  update(start,end) {
+    this.start = start;
+    this.end = end;
   }
 }
 
@@ -81,10 +83,24 @@ class Rect {
   draw() {
     drawRect(this);
   }
-  addVector(vector) {
-    this.start.x += vector.x;
-    this.start.y += vector.y;
+}
+
+class Text {
+  constructor(string,center,colour) {
+    this.string = string || "Hello World!";
+    this.center = center || new Point(0,0);
+    this.colour = colour || "black";
+    objects.push(this);
   }
+  draw() {
+    drawText(this);
+  }
+}
+
+var mousePoint = new Point();
+
+function setFont(size,serif) {
+  ctx.font = size.toString() + "px " + serif.toString();
 }
 
 function canvasCheck() {
@@ -134,6 +150,11 @@ function drawRect(rect) {
   }else if (rect.sf == "stroke") {
     ctx.strokeRect(rect.start.x,rect.start.y,rect.width,rect.height);
   }
+}
+
+function drawText(text) {
+  ctx.fillStyle = text.colour;
+  ctx.fillText(text.string,text.center.x,text.center.y);
 }
 
 function clearCanvas() {
