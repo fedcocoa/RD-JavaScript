@@ -1,4 +1,3 @@
-//This file is the main RD.js Library. It contains all the basics for the Library.
 //At the time of writing this I haven't got any other files for other functionality but
 //I plan to add more files later down the line but for now, I'm going to focus on this one.
 //Please don't edit stuff in here unless you know what you are doing, changes could break
@@ -16,7 +15,7 @@ var drawRate = 1;
 setInterval(draw,drawRate);
 
 addEventListener("mousemove",function(event){
-  mousePoint.x = event.clientX
+  mousePoint.x = event.clientX;
   mousePoint.y = event.clientY;
 });
 
@@ -45,7 +44,7 @@ class Circle {
   constructor(Center,r,c,sf) {
     this.center = Center || new Point(0,0);
     this.radius = r || 10;
-    this.colour = c || "white";
+    this.colour = c || "black";
     this.sf = sf || "fill";
     objects.push(this);
   }
@@ -94,6 +93,18 @@ class Text {
   }
   draw() {
     drawText(this);
+  }
+}
+
+class Pair {
+  constructor(a,b) {
+    if(a > b) {
+      this.a = a;
+      this.b = b;
+    }else {
+      this.a = b;
+      this.b = a;
+    }
   }
 }
 
@@ -178,4 +189,16 @@ function RGBStr(r,g,b) {
 
 function RGBAStr(r,g,b,a) {
   return "rgba(" + r.toString() + "," + g.toString() + "," + b.toString() + "," + a.toString() + ")";
+}
+
+function nCr(n,r) {
+  var top = 1;
+  var bot = 1;
+  for(var i=0; i != r; i++) {
+    top *= (n-i);
+  }
+  for(var i=1; i !=r+1; i++) {
+    bot *= i;
+  }
+  return top/bot;
 }
